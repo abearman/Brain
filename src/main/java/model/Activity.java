@@ -64,6 +64,9 @@ public class Activity {
             String key = keys.next();
             json.put(key,metadata.get(key));
         }
+        if (this.nearestLocationData != null) {
+            json.put("location_data",this.nearestLocationData.toJSON());
+        }
         return json;
     }
 }

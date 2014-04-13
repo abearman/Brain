@@ -14,6 +14,8 @@ import model.Activity;
 import model.LocationData;
 import model.Suggestion;
 import org.json.JSONException;
+import org.json.JSONObject;
+import suggest.RemarkEngine;
 import suggest.SuggestionEngine;
 import util.Util;
 
@@ -106,8 +108,11 @@ public class BrainServlet extends HttpServlet {
             }
         }
 
-        Suggestion suggestion = SuggestionEngine.getSuggestion(activities,transportType);
-        DAL.setShowCount(uid,suggestion.activity.id,suggestion.activity.shows+1);
+        Suggestion suggestion = SuggestionEngine.getSuggestion(activities,transportType,feeling);
+
+        if (suggestion.activity != null) {
+            DAL.setShowCount(uid,suggestion.activity.id,suggestion.activity.shows+1);
+        }
 
         response.setContentType("application/json");
         response.getWriter().write(suggestion.toString());

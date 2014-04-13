@@ -17,7 +17,8 @@ public class Suggestion {
 
         try {
             json.put("reason", reason);
-            json.put("suggestion", activity.toJSON());
+            if (activity != null)
+                json.put("suggestion", activity.toJSON());
         } catch (JSONException e) {
             e.printStackTrace();
         }
