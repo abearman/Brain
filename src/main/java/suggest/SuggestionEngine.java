@@ -36,7 +36,7 @@ public class SuggestionEngine {
             }
         }
 
-        suggestion.reason += RemarkEngine.getSimilarCategoryRemark(suggestion.activity, activities);
+        suggestion.reason += " "+RemarkEngine.getSimilarCategoryRemark(suggestion.activity, activities);
 
         if (suggestion.activity == null) {
             suggestion.reason = RemarkEngine.getNoResultsRemark();
@@ -52,7 +52,6 @@ public class SuggestionEngine {
         try {
             activity.metadata.getString("yelp_thumbnail");
         } catch (JSONException e) {
-            System.err.println("No thumbnail, disqualified");
             return false;
         }
 
@@ -140,16 +139,20 @@ public class SuggestionEngine {
     }
 
     private static double getWeatherCost(Activity activity) {
-        if (activity.theme.equals("trail") || activity.theme.equals("pool") || activity.theme.equals("golf")) {
-            try {
-                double tempF = activity.nearestLocationData.data.getJSONObject("current_condition").getDouble("temp_F");
-                // If we're going outside, consider anything above 60 a bonus, and anything below a penalty
-                tempF -= 60;
-                tempF /= 20;
-                return tempF;
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        double weatherOpinion = 0;
+        // If we're outside
+        if (activity.theme.equals("trail") || activity.theme.equals("pool") || activity.theme.equals("golf")) weatherOpinion = 1;
+        else if (activity.theme.equals("movie-theatre")) weatherOpinion = -1;
+
+        try {
+            double tempF = activity.nearestLocationData.data.getJSONObject("current_condition").getDouble("temp_F");
+            // If we're going outside, consider anything above 60 a bonus, and anything below a penalty.
+            // Of course, our "weatherOpinion" can flip this. On crumby days, we'll favor movies.
+            tempF -= 60;
+            tempF /= 20;
+            return tempF*weatherOpinion;
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         // Weather plays no part if we're not outside
         return 0;

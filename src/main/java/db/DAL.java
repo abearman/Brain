@@ -1,8 +1,10 @@
 package db;
 
 import model.Activity;
+import model.Event;
 import model.LocationData;
 import model.User;
+import org.joda.time.LocalDateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -200,6 +202,30 @@ public class DAL {
             e.printStackTrace();
         }
         return locationData;
+    }
+
+    public static List<Event> getEventsForActivity(Activity activity) {
+        List<Event> events = new ArrayList<Event>();
+        try {
+            LocalDateTime time = new LocalDateTime();
+            String query = "SELECT * FROM events where venue = "+activity.id+" AND starthour >= "+time.getHourOfDay()+";";
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Event event = new Event();
+                event.activity = activity;
+                event.starthour = rs.getInt("starthour");
+                event.startminute = rs.getInt("startminute");
+                event.endhour = rs.getInt("endhour");
+                event.endminute = rs.getInt("endminute");
+                event.metadata = new JSONObject(rs.getString("metadata"));
+                events.add(event);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return events;
     }
 
 	public static List<Activity> getSuggestions(double lat, double lng, double boxSize, boolean isParks, boolean isBars, boolean isFood, boolean isMovies, boolean isShopping, boolean isOther) throws JSONException {

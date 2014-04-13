@@ -52,7 +52,7 @@ public class RemarkEngine {
             String proofCategory = categoriesLikedPresent.get(0).toLowerCase();
             if (proofCategory.endsWith("s")) proofCategory = proofCategory.substring(0,proofCategory.length()-1);
             boolean startsWithVowel = proofCategory.matches("[aAeEiIoOuU].*");
-            reason += " This joint is a";
+            reason += "This joint is a";
             if (startsWithVowel) reason += "n";
             reason += " "+proofCategory+", which you've enjoyed in the past.";
         }
