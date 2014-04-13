@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+		  http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+           version="3.0">
+
+    <servlet>
+        <servlet-name>BrainServlet</servlet-name>
+        <servlet-class>servlet.BrainServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BrainServlet</servlet-name>
+        <url-pattern>/Brain</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>DeviceIdServlet</servlet-name>
+        <servlet-class>servlet.DeviceIdServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeviceIdServlet</servlet-name>
+        <url-pattern>/Device</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RatingServlet</servlet-name>
+        <servlet-class>servlet.RatingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RatingServlet</servlet-name>
+        <url-pattern>/Rating</url-pattern>
+    </servlet-mapping>
+</web-app>

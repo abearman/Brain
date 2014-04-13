@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1503965863">
+    <data-source source="LOCAL" name="MySQL - venture@grapevine.stanford.edu" uuid="91d1e762-47f0-4bd0-8a16-ed0e454ac3a1">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://grapevine.stanford.edu:3306/venture</jdbc-url>
+      <user-name>venturebot</user-name>
+      <user-password>dfc7dfdfdfc9dfc2dfcbdfcedfdcdfcfdfc4dfdedfdfdfd8dfcf</user-password>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+
