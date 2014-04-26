@@ -1,54 +1,47 @@
 package db;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.mongodb.*;
 
+import java.net.UnknownHostException;
 
 /** 
  * db.DBConnection class handles creating and closing the connection.
  */
 public class DBConnection {
-	
 
-	private Statement stmt;
-	private Connection con;
-	
-	/** 
-	 * Constructor connects to the database.
-	 */
-	public DBConnection() throws SQLException {
-		try{
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-			con = DriverManager.getConnection("jdbc:mysql://" + MyDBInfo.MYSQL_DATABASE_SERVER + "/" + MyDBInfo.MYSQL_DATABASE_NAME, MyDBInfo.MYSQL_USERNAME, MyDBInfo.MYSQL_PASSWORD);
-			stmt = con.createStatement();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	//private Statement stmt;
+	//private Connection con;
+
+    private Mongo mongo;
+    private DBCollection coll;
+
+    /**
+     * Constructor connects to the database.
+     */
+    public DBConnection(String collection) {
+        try {
+            MongoURI mongoURI = new MongoURI(MyDBInfo.CONNECTION_STRING);
+            mongo = new Mongo(mongoURI);
+            DB db = mongo.getDB("venture");
+            coll = db.getCollection(collection);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+    }
 
 	/** 
 	 * Returns a statement so that product catalog can do querying.
 	 */
-	public Statement getStatement(){
-		return stmt;
+	public DBCollection getCollection(){
+		return coll;
 	}
 	
 	/** 
 	 * Closes the connection.
 	 */
-	public void closeConnection(){
-		try{
-			con.close();
-		}catch(SQLException e){
-			e.printStackTrace();
-		}
-	}
+	public void closeConnection() {
+        mongo.close();
+    }
 }
 
 
